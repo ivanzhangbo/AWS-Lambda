@@ -1,0 +1,57 @@
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b">
+      <el-submenu index="1">
+        <template slot="title">
+          <!--<i class="el-icon-location"></i>-->
+          <span>导航一</span>
+        </template>
+            <el-submenu :router='true' v-for='(item, index) in allMenuLabel' :key='index'>
+                <el-submenu v-if='item.sub_cat' :index='item.name' :route = 'item.value' class='edit_wrapper' @mouseover.native="overShow" @mouseout.native="outHide">
+                    <template slot='title'>
+                        <i :class='item.icon'></i>
+                        <span slot='title'>{{item.name}}</span>
+                    </template>
+                    <el-submenu v-if='item1.name' v-for= '(item1, index) in item.sub_cat' :key='item1.name' :index='item1.name' :route='item1.name'>
+                        <template slot='title'>
+                            <i :class='item1.icon'></i>
+                            <span slot='title'>{{item1.name}}</span>
+                        </template>
+                        <el-submenu v-for= '(item2, index) in item1.sub_cat' :key='item2.name' v-if='item2.name' :index='item2.name' :route = 'item2.name'>
+                            <template slot='title'>
+                                <i :class='item2.icon'></i>
+                                <span slot='title'>{{item2.name}}</span>
+                            </template>
+                            <el-submenu v-for= '(item3, index) in item2.sub_cat' :key='item3.name' v-if='item3.name' ::index='item3.name' :route = 'item3.value'>
+                                <template slot='title'>
+                                    <i :class='item3.icon'></i>
+                                    <span slot='title'>{{item3.name}}</span>
+                                </template>
+                                <!--<el-menu-item v-for= '(item4, index) in item3.sub_cat' :key='item3.name' v-if='item4.childs == null' :index='item4.name' :route = 'item4.value'>-->
+                                    <!--<span>{{item4.name}}</span>-->
+                                <!--</el-menu-item>-->
+                            </el-submenu>
+                            <el-menu-item v-for= '(item3, index) in item2.childs' :key='item3.name' v-if='item3.childs == null' :index='item3.name' :route = 'item3.value'>
+                                <span>{{item3.alias}}</span>
+                            </el-menu-item>
+                        </el-submenu>
+                        <el-menu-item v-for= '(item2, index) in item1.childs' :key='item2.name' v-if='item2.childs == null' :index='item2.name' :route = 'item2.value'>
+                            <span>{{item2.alias}}</span>
+                        </el-menu-item>
+                    </el-submenu>
+                    <el-menu-item v-for= '(item1, index) in item.childs' :key='item1.name' v-if='item1.childs == null' :index='item1.name' :route = 'item1.value'>
+                        <span>{{item1.alias}}</span>
+                    </el-menu-item>
+                </el-submenu>
+                <el-menu-item v-if='item.childs == null' :index='item.name' :route = 'item.value'>
+                    <i :class='item.icon'></i>
+                    <span slot='title'>{{item.alias}}</span>
+                </el-menu-item>
+            </el-submenu>
+        </el-submenu>
+</el-menu>
