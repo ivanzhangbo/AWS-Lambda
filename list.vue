@@ -23,7 +23,6 @@ export default{
 	  'product-list': productList,
   },
   methods:{
-
       getListData() {
                 if(this.pageType=='search'){
                   getGoods({
@@ -45,7 +44,7 @@ export default{
 
                     this.listData = response.data.results;
                     this.proNum = response.data.count;
-                    console.log(this.listData)
+                    // this.$emit("listproNum",this.proNum);
                   }).catch(function (error) {
                     console.log(error);
                   });
@@ -62,6 +61,7 @@ export default{
 }
 
 </script>
+
 <style scoped>
 
 </style>

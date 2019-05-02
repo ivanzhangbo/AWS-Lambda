@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="index-left">
       <el-radio-group v-model="isCollapse" style="margin-bottom: 15px;">
         <el-radio-button :label="false">+</el-radio-button>
@@ -21,12 +21,12 @@
               <span slot="title">组织</span>
             </template>
 
-              <el-submenu v-for="(item,index) in allMenuLabel" :key="item.id" :data="item"  :index="item.id">
+              <el-submenu v-for="item in allMenuLabel" :key="item.id" :data="item"  :index="item.name">
                 <template slot="title"><span><router-link :to="'/list/'+item.id">{{item.id}}-{{ item.name }}</router-link></span></template>
-                <el-submenu v-for="(list,index) in item.sub_cat" :key="list.id" :data="list"  :index="list.id" >
+                <el-submenu v-for="list in item.sub_cat" :key="list.id" :data="list"  :index="list.name" >
                     <span slot="title">{{list.id}}-{{list.name}}</span>
 
-                      <el-menu-item v-for="(sublist,index) in list.sub_cat" :key="sublist.id" :data="sublist"  :index="sublist.id">
+                      <el-menu-item v-for="sublist in list.sub_cat" :key="sublist.id" :data="sublist"  :index="sublist.name">
                         <span slot="title">{{sublist.id}}-{{sublist.name}}</span>
                       </el-menu-item>
                 </el-submenu>
@@ -86,49 +86,17 @@
     </div>
 
     <div class="index-right">
+      <div class="bread"><!--面包屑-->
+        <div class="bread-left">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+    <el-breadcrumb-item>组织</el-breadcrumb-item>
+  </el-breadcrumb>
+        </div>
+
+      </div>
       <list></list>
-
-        <!--<el-table-->
-          <!--:data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()) || data.address.toLowerCase().includes(search.toLowerCase()))"-->
-          <!--style="width: 100%">-->
-          <!--<el-table-column-->
-            <!--label="姓名"-->
-            <!--prop="name">-->
-            <!--<template slot-scope="scope">&lt;!&ndash;点击弹出样式&ndash;&gt;-->
-              <!--<el-popover trigger="hover" placement="top">-->
-                <!--<p>姓名: {{ scope.row.name }}</p>-->
-                <!--<p>住址: {{ scope.row.address }}</p>-->
-                <!--<div slot="reference" class="name-wrapper">-->
-                  <!--<el-tag size="medium">{{ scope.row.name }}</el-tag>-->
-                <!--</div>-->
-              <!--</el-popover>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-            <!--label="地址"-->
-            <!--prop="address">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-            <!--label="日期"-->
-            <!--sortable-->
-            <!--prop="date"-->
-      <!--column-key="date"-->
-      <!--:filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"-->
-      <!--:filter-method="filterHandler"-->
-    <!--&gt;-->
-          <!--</el-table-column>-->
-          <!--<el-table-column-->
-            <!--align="right">-->
-            <!--<template slot="header" slot-scope="scope">-->
-              <!--<el-input-->
-                <!--v-model="search"-->
-                <!--size="mini"-->
-                <!--placeholder="输入关键字搜索"/>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-        <!--</el-table>-->
     </div>
-
   </div>
 </template>
 
@@ -141,26 +109,7 @@
       return {
         isCollapse: true,
         allMenuLabel:[],
-
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '张小虎',
-          address: '千葉県市川市'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
-        search: ''
-
+        search: '',
       };
     },
     methods: {
@@ -181,7 +130,6 @@
               console.log(error);
             });
         },
-
     },
     created() {
       this.getMenu()//获取菜单
@@ -193,16 +141,28 @@
 </script>
 
 <style>
-  .index-left{
+  .container{
+    margin: 10px;
+  }
+
+  .index-left,.index-right{
+    position: relative;
     float: left;
-    padding: 20px;
+  }
+
+  .index-left{
+
   }
 
   .index-right{
-    position: absolute;
-    left: 150px;
-    top: 150px;
-    width: 80%;
+    padding-left: 60px;
+    padding-top: 22px;
+    padding-bottom: 40px;
+    width: 85%;
+  }
+
+  .bread{
+    margin-bottom: 20px;
   }
 
 </style>
